@@ -1,93 +1,100 @@
 ﻿#include <iostream>
-#include <vector>
 using namespace std;
 
-bool isNumFreeInRow(int& num, int arr[9][9], int row) {
-	for (int i = 0; i < 9; i++) {
-		if (arr[row][i] == num) {
-			return false;
-		}
-	}
-	return true;
+const int rows = 9;
+const int cols = 9;
+
+int arr[rows][cols] = {{5, 3, 0, 0, 7, 0, 0, 0, 0},
+	                   {6, 0, 0, 1, 9, 5, 0, 0, 0},
+	                   {0, 9, 8, 0, 0, 0, 0, 6, 0},
+	                   {8, 0, 0, 0, 6, 0, 0, 0, 3},
+	                   {4, 0, 0, 8, 0, 3, 0, 0, 1},
+	                   {7, 0, 0, 0, 2, 0, 0, 0, 6},
+	                   {0, 6, 0, 0, 0, 0, 2, 8, 0},
+	                   {0, 0, 0, 4, 1, 9, 0, 0, 5},
+	                   {0, 0, 0, 0, 8, 0, 0, 7, 9}};
+
+bool isNumFreeInRow(int num, int row) {
+    for (int i = 0; i < 9; i++) {
+        if (arr[row][i] == num) {
+            return false;
+        }
+    }
+    return true;
 }
 
-bool isNumFreeInCol(int& num, int arr[9][9], int col) {
-	for (int i = 0; i < 9; i++) {
-		if (arr[i][col] == num) {
-			return false;
-		}
-	}
-	return true;
+bool isNumFreeInCol(int num, int col) {
+    for (int i = 0; i < 9; i++) {
+        if (arr[i][col] == num) {
+            return false;
+        }
+    }
+    return true;
 }
 
-bool isNumFreeInBox(int& num, int arr[9][9], int row, int col) {
-	int tempRow, tempCol = 0;
+bool isNumFreeInBox(int num, int row, int col) {
+    int tempRow, tempCol = 0;
 
-	if (row < 3)		tempRow = 0;
-	else if (row < 6)	tempRow = 1;
-	else				tempRow = 2;
+    if (row < 3)        tempRow = 0;
+    else if (row < 6)    tempRow = 1;
+    else                tempRow = 2;
 
-	if (col < 3)		tempCol = 0;
-	else if (col < 6)	tempCol = 1;
-	else				tempCol = 2;
+    if (col < 3)        tempCol = 0;
+    else if (col < 6)    tempCol = 1;
+    else                tempCol = 2;
 
-	for (int i = 0 + 3 * tempRow; i < 3 + 3 * tempRow; i++)
-		for (int j = 0 + 3 * tempCol; j < 3 + 3 * tempCol; j++)
-			if (arr[i][j] == num)
-				return false;
-	return true;
+    for (int i = 0 + 3 * tempRow; i < 3 + 3 * tempRow; i++)
+        for (int j = 0 + 3 * tempCol; j < 3 + 3 * tempCol; j++)
+            if (arr[i][j] == num)
+                return false;
+    return true;
 }
 
-bool isNumMissing(int arr[9][9], int row, int col) {
-	return arr[row][col] == 0;
+bool isNumMissing(int& row, int& col) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (arr[i][j] == 0) {
+                row = i;
+                col = j;
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
-bool isNumFits(int arr[9][9], int num, int row, int col) {
-	return (isNumFreeInRow(num, arr, row) && isNumFreeInCol(num, arr, col) && isNumFreeInBox(num, arr, row, col));
-}
 
-int numberSelection(int arr[9][9], int row, int col) {
-	int temp = 1;
+bool solution() {
+    int row, col;
 
-	for (int i = 0; i < 9; i++) {
-		if (isNumFits(arr, i, row, col)) {
-			temp = i;
-			return temp;
-		}
-		temp++;
-	}
+    if (!isNumMissing(row, col)) {
+        return true;
+    }
 
-	return 0;
+    for (int i = 1; i <= 9; i++) {
+        if (isNumFreeInRow(i, row) && isNumFreeInCol(i, col) && isNumFreeInBox(i, row, col)) {
+            arr[row][col] = i;
+            if (solution()) {
+                return true;
+            }
+            arr[row][col] = 0;
+        }
+    }
+    return false;
 }
 
 int main()
 {
-	int sudoku[9][9] = {{5, 3, 0, 0, 7, 0, 0, 0, 0},
-						{6, 0, 0, 1, 9, 5, 0, 0, 0},
-						{0, 9, 8, 0, 0, 0, 0, 6, 0},
-						{8, 0, 0, 0, 6, 0, 0, 0, 3},
-						{4, 0, 0, 8, 0, 3, 0, 0, 1},
-						{7, 0, 0, 0, 2, 0, 0, 0, 6},
-						{0, 6, 0, 0, 0, 0, 2, 8, 0},
-						{0, 0, 0, 4, 1, 9, 0, 0, 5},
-						{0, 0, 0, 0, 8, 0, 0, 7, 9}};
-	const int row = 9;
-	const int col = 9;
+    if (solution()) {
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
+                cout << arr[i][j] << " ";
+            }
+            cout << endl;
+        }
+    } else {
+        cout << "No solution!" << endl;
+    }
 
-	for (int i = 0; i < col; i++) {
-		for (int j = 0; j < row; j++) {
-			if (isNumMissing(sudoku, j, i)) {
-				sudoku[j][i] = numberSelection(sudoku, j, i);
-			}
-		}
-	}
-
-	for (int i = 0; i < col; i++) {
-		for (int j = 0; j < row; j++) {
-			cout << sudoku[i][j] << " ";
-		}
-		cout << endl;
-	}
-
-	return 0;
+    return 0;
 }
