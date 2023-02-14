@@ -63,6 +63,10 @@ bool isNumMissing(int& row, int& col) {
     return false;
 }
 
+bool isNumFits(int num, int row, int col) {
+ 	return (isNumFreeInRow(num, row) && isNumFreeInCol(num, col) && isNumFreeInBox(num, row, col));
+}
+
 
 bool solution() {
     int row, col;
@@ -72,7 +76,7 @@ bool solution() {
     }
 
     for (int i = 1; i <= 9; i++) {
-        if (isNumFreeInRow(i, row) && isNumFreeInCol(i, col) && isNumFreeInBox(i, row, col)) {
+        if (isNumFits(i, row, col)) {
             arr[row][col] = i;
             if (solution()) {
                 return true;
