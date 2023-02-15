@@ -1,18 +1,40 @@
 ﻿#include <iostream>
+#include <fstream>
 using namespace std;
 
 const int rows = 9;
 const int cols = 9;
+int arr[rows][cols];
 
-int arr[rows][cols] = {{5, 3, 0, 0, 7, 0, 0, 0, 0},
-	                   {6, 0, 0, 1, 9, 5, 0, 0, 0},
-	                   {0, 9, 8, 0, 0, 0, 0, 6, 0},
-	                   {8, 0, 0, 0, 6, 0, 0, 0, 3},
-	                   {4, 0, 0, 8, 0, 3, 0, 0, 1},
-	                   {7, 0, 0, 0, 2, 0, 0, 0, 6},
-	                   {0, 6, 0, 0, 0, 0, 2, 8, 0},
-	                   {0, 0, 0, 4, 1, 9, 0, 0, 5},
-	                   {0, 0, 0, 0, 8, 0, 0, 7, 9}};
+void extractSudokuFile() {
+	ifstream in("sud.txt");
+
+	if (in.is_open()) {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				in >> arr[i][j];
+			}
+		}
+		in.close();
+	} else {
+		cout << "File is missing." << endl;
+	}
+}
+
+void createSudokuFile() {
+	ofstream out("res.txt");
+
+	if (out.is_open()) {
+		out << "Result:\n\n";
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				out << arr[i][j] << " ";
+			}
+			out << endl;
+		}
+		out.close();
+	}
+}
 
 bool isNumFreeInRow(int num, int row) {
     for (int i = 0; i < 9; i++) {
@@ -89,13 +111,10 @@ bool solution() {
 
 int main()
 {
+	extractSudokuFile();
     if (solution()) {
-        for (int i = 0; i < cols; i++) {
-            for (int j = 0; j < rows; j++) {
-                cout << arr[i][j] << " ";
-            }
-            cout << endl;
-        }
+        cout << "Solution is in \"res.txt\" file" << endl;
+        createSudokuFile();
     } else {
         cout << "No solution!" << endl;
     }
