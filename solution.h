@@ -18,8 +18,9 @@ public:
 	bool isNumFits(int num, int row, int col);
 
 	bool solution();
-	
-	int arr[rows][cols];
 
+	int getArrCell(int row, int col) { return arr[row][col]; }
+	
 private:
+	int arr[rows][cols];
 };

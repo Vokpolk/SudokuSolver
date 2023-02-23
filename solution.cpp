@@ -102,16 +102,3 @@ bool CSudoku::solution() {
     }
     return false;
 }
-
-/*int main()
-{
-	extractSudokuFile();
-    if (solution()) {
-        cout << "Solution is in \"res.txt\" file" << endl;
-        createSudokuFile();
-    } else {
-        cout << "No solution!" << endl;
-    }
-
-    return 0;
-}*/

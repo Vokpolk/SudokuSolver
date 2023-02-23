@@ -4,7 +4,6 @@
 
 CDrawEngine::CDrawEngine() {
 	window.create(VideoMode(550, 550), "Sudoku solver");
-    //CSudoku sudoku;
 }
 
 CDrawEngine::~CDrawEngine() {
@@ -36,7 +35,7 @@ void CDrawEngine::start() {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             textArr[count].setFont(font);
-            textArr[count].setString(to_string(sudoku->arr[i][j]));
+            textArr[count].setString(to_string(sudoku->getArrCell(i, j)));
             textArr[count].setPosition(100 + j * 40, 100 + i * 40);
             textArr[count].setCharacterSize(30);
             textArr[count].setFillColor(Color::White);
