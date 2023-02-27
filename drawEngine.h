@@ -1,6 +1,9 @@
 #pragma once
 #include "stdafx.h"
 class CSudoku;
+class CButton;
+class CSudokuField;
+
 class CDrawEngine {
 public:
 	CDrawEngine();
@@ -18,5 +21,7 @@ private:
 	Event event;
 
 	CSudoku* sudoku;
+	CButton* button;
+	CSudokuField* sudokuField;
 
 };

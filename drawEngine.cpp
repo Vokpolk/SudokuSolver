@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "solution.h"
+#include "sudokuField.h"
+#include "button.h"
 #include "drawEngine.h"
 
 CDrawEngine::CDrawEngine() {
@@ -7,6 +9,16 @@ CDrawEngine::CDrawEngine() {
 }
 
 CDrawEngine::~CDrawEngine() {
+    if (button != nullptr) {
+        delete button;
+        button = nullptr;
+    }
+
+    if (sudokuField != nullptr) {
+        delete sudokuField;
+        sudokuField = nullptr;
+    }
+
     if (sudoku != nullptr) {
         delete sudoku;
         sudoku = nullptr;
@@ -14,8 +26,12 @@ CDrawEngine::~CDrawEngine() {
 }
 
 void CDrawEngine::start() {
+    //
+    button = new CButton;
+    sudokuField = new CSudokuField;
+
     //решение судоку
-    CSudoku* sudoku = new CSudoku;
+    sudoku = new CSudoku;
     sudokuSolution(sudoku);
 
     //вывод результата
