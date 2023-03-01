@@ -6,6 +6,7 @@
 
 CDrawEngine::CDrawEngine() {
 	window.create(VideoMode(550, 550), "Sudoku solver");
+    start();
 }
 
 CDrawEngine::~CDrawEngine() {
@@ -26,8 +27,14 @@ CDrawEngine::~CDrawEngine() {
 }
 
 void CDrawEngine::start() {
-    //
-    button = new CButton;
+    //заготовка для кнопки
+    Vector2f buttonPosition;
+    buttonPosition.x = 210.f;
+    buttonPosition.y = 20.f;
+    Vector2f buttonSize;
+    buttonSize.x = 120.f;
+    buttonSize.y = 40.f;
+    button = new CButton(buttonPosition, buttonSize, "Press to solve");
     sudokuField = new CSudokuField;
 
     //решение судоку
@@ -39,7 +46,6 @@ void CDrawEngine::start() {
     font.loadFromFile("Consolas/consolas.ttf");
 
     //создаём текст
-    Text res;
     res.setFont(font);
     res.setString("Result:");
     res.setPosition(100, 100 - 40);
@@ -47,7 +53,6 @@ void CDrawEngine::start() {
     res.setFillColor(Color::White);
 
     int count = 0;
-    Text textArr[81];
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             textArr[count].setFont(font);
@@ -59,28 +64,37 @@ void CDrawEngine::start() {
         }
     }
 
-	while (window.isOpen()) {
+    draw();	
+}
+
+void CDrawEngine::draw() {
+    while (window.isOpen()) {
         while (window.pollEvent(event)) {
-        	if (event.type == Event::Closed) {
-                window.close();
-        	}
-            if (event.key.code == Keyboard::Escape) {
+            if (event.type == Event::Closed) {
                 window.close();
             }
         }
-        draw();
         window.draw(res);
         for (int i = 0; i < 81; i++) {
             window.draw(textArr[i]);
         }
 
-		window.display();
-    	window.clear(Color(0,0,0,0));
+        if (event.type == Event::MouseButtonPressed) {
+            if (event.mouseButton.button == Mouse::Left) {
+                button->leftClickHandle(Mouse::getPosition(window), true);
+            }
+        }
+        if (event.type == Event::MouseButtonReleased) {
+            if (event.mouseButton.button == Mouse::Left) {
+                button->leftClickHandle(Mouse::getPosition(window), false);
+            }
+        }
+        //отрисовка кнопки
+        button->draw(window);
+        //отрисовка окна
+        window.display();
+        window.clear(Color(0,0,0,0));
     }
-}
-
-void CDrawEngine::draw() {
-
 }
 
 void CDrawEngine::sudokuSolution(CSudoku* sudoku) {
@@ -92,9 +106,3 @@ void CDrawEngine::sudokuSolution(CSudoku* sudoku) {
         cout << "No solution!" << endl;
     }
 }
-
-
-
-
-
-

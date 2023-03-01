@@ -24,4 +24,7 @@ private:
 	CButton* button;
 	CSudokuField* sudokuField;
 
+	Text res;
+    Text textArr[81];
+
 };
