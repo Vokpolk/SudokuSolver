@@ -12,6 +12,7 @@ public:
 	void start();
 
 	void draw();
+	void drawSudokuField();
 
 	void sudokuSolution(CSudoku* sudoku);
 	
@@ -25,6 +26,7 @@ private:
 	CSudokuField* sudokuField;
 
 	Text res;
+	Font font;
     Text textArr[81];
 
 };

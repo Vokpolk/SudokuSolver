@@ -1,5 +1,9 @@
 #include "solution.h"
 
+CSudoku::CSudoku() {
+    triedToSolve = false;
+}
+
 void CSudoku::extractSudokuFile() {
 	ifstream in("sud.txt");
 

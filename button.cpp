@@ -6,10 +6,11 @@ CButton::CButton(Vector2f position, Vector2f size, string text) {
 	this->size 			= size;
 	this->text 			= text;
 
-	textPosition.x = position.x + size.x;// / 2.0f;
+	textPosition.x = position.x + size.x;
     textPosition.y = position.y + size.y / 2;
 
     buttonClicked = false;
+    color = Color(150, 150, 150);
 }
 
 void CButton::draw(RenderWindow& window) {
@@ -18,7 +19,7 @@ void CButton::draw(RenderWindow& window) {
 
 	rectangle.setSize(size);
 	rectangle.setFillColor(color);
-	rectangle.setOutlineThickness(5);
+	rectangle.setOutlineThickness(1);
 	rectangle.setPosition(position);
 
 	window.draw(rectangle);
@@ -40,9 +41,9 @@ void CButton::drawText(RenderWindow& window) {
 
 void CButton::changeButtonColor() {
 	if (buttonClicked) {
-		color = Color(130, 230, 30);
+		color = Color(200, 200, 200);
 	} else {
-		color = Color(252, 15, 192);
+		color = Color(150, 150, 150);
 	}
 }
 

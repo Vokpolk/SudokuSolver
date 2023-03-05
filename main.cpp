@@ -4,7 +4,5 @@ int main()
 {
     CDrawEngine engine;
 
-	engine.start();
-
     return 0;
 }

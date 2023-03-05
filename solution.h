@@ -6,6 +6,9 @@ const int cols = 9;
 
 class CSudoku {
 public:
+	CSudoku();
+	~CSudoku() {};
+
 	void extractSudokuFile();
 	void createSudokuFile();
 
@@ -20,7 +23,11 @@ public:
 	bool solution();
 
 	int getArrCell(int row, int col) { return arr[row][col]; }
+
+	bool getTriedToSolve() { return triedToSolve; }
+	void setTriedToSolve(bool triedToSolve) { this->triedToSolve = triedToSolve; }
 	
 private:
 	int arr[rows][cols];
+	bool triedToSolve;
 };

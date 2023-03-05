@@ -28,21 +28,62 @@ CDrawEngine::~CDrawEngine() {
 
 void CDrawEngine::start() {
     //заготовка для кнопки
-    Vector2f buttonPosition;
-    buttonPosition.x = 210.f;
-    buttonPosition.y = 20.f;
-    Vector2f buttonSize;
-    buttonSize.x = 120.f;
-    buttonSize.y = 40.f;
+    Vector2f buttonPosition(210.f, 20.f);
+    Vector2f buttonSize(120.f, 40.f);
     button = new CButton(buttonPosition, buttonSize, "Press to solve");
     sudokuField = new CSudokuField;
 
     //решение судоку
     sudoku = new CSudoku;
-    sudokuSolution(sudoku);
+    sudoku->extractSudokuFile();
+    //sudokuSolution(sudoku);
 
+    draw();	
+}
+
+void CDrawEngine::draw() {
+    while (window.isOpen()) {
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed) {
+                window.close();
+            }
+        }
+
+        //draw sudoku
+        window.draw(res);
+        for (int i = 0; i < 81; i++) {
+            window.draw(textArr[i]);
+        }
+
+        //draw button
+        if (event.type == Event::MouseButtonPressed) {
+            if (event.mouseButton.button == Mouse::Left) {
+                button->leftClickHandle(Mouse::getPosition(window), true);
+            }
+        }
+        if (event.type == Event::MouseButtonReleased) {
+            if (event.mouseButton.button == Mouse::Left) {
+                button->leftClickHandle(Mouse::getPosition(window), false);
+                if (button->pointIsMine(Mouse::getPosition(window))) {
+                    if (!sudoku->getTriedToSolve()) {
+                        sudokuSolution(sudoku);
+                        sudoku->setTriedToSolve(true);
+                    }
+                }
+            }
+        }
+
+        drawSudokuField();
+        button->draw(window);
+
+        //draw window
+        window.display();
+        window.clear(Color(0,0,0,0));
+    }
+}
+
+void CDrawEngine::drawSudokuField() {
     //вывод результата
-    Font font;
     font.loadFromFile("Consolas/consolas.ttf");
 
     //создаём текст
@@ -62,38 +103,6 @@ void CDrawEngine::start() {
             textArr[count].setFillColor(Color::White);
             count++;
         }
-    }
-
-    draw();	
-}
-
-void CDrawEngine::draw() {
-    while (window.isOpen()) {
-        while (window.pollEvent(event)) {
-            if (event.type == Event::Closed) {
-                window.close();
-            }
-        }
-        window.draw(res);
-        for (int i = 0; i < 81; i++) {
-            window.draw(textArr[i]);
-        }
-
-        if (event.type == Event::MouseButtonPressed) {
-            if (event.mouseButton.button == Mouse::Left) {
-                button->leftClickHandle(Mouse::getPosition(window), true);
-            }
-        }
-        if (event.type == Event::MouseButtonReleased) {
-            if (event.mouseButton.button == Mouse::Left) {
-                button->leftClickHandle(Mouse::getPosition(window), false);
-            }
-        }
-        //отрисовка кнопки
-        button->draw(window);
-        //отрисовка окна
-        window.display();
-        window.clear(Color(0,0,0,0));
     }
 }
 
