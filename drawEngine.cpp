@@ -6,6 +6,8 @@
 
 CDrawEngine::CDrawEngine() {
 	window.create(VideoMode(550, 550), "Sudoku solver");
+
+	dir = "/Users/vokpolk/Documents/Programming/C++/SudokuSolver/";
     start();
 }
 
@@ -84,7 +86,7 @@ void CDrawEngine::draw() {
 
 void CDrawEngine::drawSudokuField() {
     //вывод результата
-    font.loadFromFile("Consolas/consolas.ttf");
+    font.loadFromFile(dir + "Consolas/consolas.ttf");
 
     //создаём текст
     res.setFont(font);

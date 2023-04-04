@@ -5,7 +5,8 @@ CSudoku::CSudoku() {
 }
 
 void CSudoku::extractSudokuFile() {
-	ifstream in("sud.txt");
+	dir = "/Users/vokpolk/Documents/Programming/C++/SudokuSolver/";
+	ifstream in(dir + "sud.txt");
 
 	if (in.is_open()) {
 		for (int i = 0; i < rows; i++) {

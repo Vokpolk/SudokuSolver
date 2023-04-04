@@ -11,6 +11,8 @@ CButton::CButton(Vector2f position, Vector2f size, string text) {
 
     buttonClicked = false;
     color = Color(150, 150, 150);
+
+	dir = "/Users/vokpolk/Documents/Programming/C++/SudokuSolver/";
 }
 
 void CButton::draw(RenderWindow& window) {
@@ -28,7 +30,7 @@ void CButton::draw(RenderWindow& window) {
 
 void CButton::drawText(RenderWindow& window) {
 	Font font;
-    font.loadFromFile("Consolas/consolas.ttf");
+    font.loadFromFile(dir + "Consolas/consolas.ttf");
     //создаём текст
     Text text(this->text, font);
     FloatRect bounds = text.getLocalBounds();

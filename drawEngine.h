@@ -28,5 +28,6 @@ private:
 	Text res;
 	Font font;
     Text textArr[81];
+	string dir;
 
 };

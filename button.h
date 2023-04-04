@@ -1,4 +1,5 @@
 #pragma once
+#include "stdafx.h"
 #include "drawingObject.h"
 
 class CButton : public CDrawingObject {
@@ -21,6 +22,7 @@ private:
 	Vector2f 		position;
 	Vector2f 		size;
 	Color			color;
+	string 			dir;
 
 	string			text;
 	Vector2f		textPosition;

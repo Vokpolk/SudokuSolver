@@ -30,4 +30,5 @@ public:
 private:
 	int arr[rows][cols];
 	bool triedToSolve;
+	string dir;
 };
